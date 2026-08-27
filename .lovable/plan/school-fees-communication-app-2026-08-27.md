@@ -12,11 +12,14 @@ Roles are stored server-side in a dedicated roles table, never on the profile, s
 ## Screens
 
 **Shared**
+
 - Sign in / sign up (email + password), password reset
+
 - Role-aware home that routes admins and parents to their own dashboard
 - Installable on Android: app icon, name, splash colors
 
 **Admin**
+
 - Dashboard: total outstanding, collected this term, recent payments, unpaid count
 - Students: list with search and class filter; add/edit student; link to parent account(s)
 - Classes and fee items (e.g. Tuition, Books, Transport) with amounts per term
@@ -25,6 +28,7 @@ Roles are stored server-side in a dedicated roles table, never on the profile, s
 - Announcements: compose a message to all parents or one class; parents get it in-app and by email
 
 **Parent**
+
 - Children list with current balance each
 - Invoice detail: line items, amount due, due date, payment history
 - Pay now: choose MoMo (MTN / Telecel / AirtelTigo) or card, complete on Paystack, return to a confirmation screen
