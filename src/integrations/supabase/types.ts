@@ -14,16 +14,433 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      announcement_reads: {
+        Row: {
+          announcement_id: string
+          read_at: string
+          user_id: string
+        }
+        Insert: {
+          announcement_id: string
+          read_at?: string
+          user_id: string
+        }
+        Update: {
+          announcement_id?: string
+          read_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "announcement_reads_announcement_id_fkey"
+            columns: ["announcement_id"]
+            isOneToOne: false
+            referencedRelation: "announcements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      announcements: {
+        Row: {
+          body: string
+          class_id: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          body: string
+          class_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          body?: string
+          class_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "announcements_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classes: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          term_label: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          term_label?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          term_label?: string | null
+        }
+        Relationships: []
+      }
+      fee_items: {
+        Row: {
+          amount_pesewas: number
+          class_id: string | null
+          created_at: string
+          id: string
+          name: string
+          term_label: string | null
+        }
+        Insert: {
+          amount_pesewas: number
+          class_id?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          term_label?: string | null
+        }
+        Update: {
+          amount_pesewas?: number
+          class_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          term_label?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fee_items_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guardians: {
+        Row: {
+          created_at: string
+          id: string
+          parent_id: string
+          relationship: string | null
+          student_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          parent_id: string
+          relationship?: string | null
+          student_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          parent_id?: string
+          relationship?: string | null
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guardians_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoice_lines: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          invoice_id: string
+          quantity: number
+          unit_amount_pesewas: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          invoice_id: string
+          quantity?: number
+          unit_amount_pesewas: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          invoice_id?: string
+          quantity?: number
+          unit_amount_pesewas?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_lines_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          due_date: string | null
+          id: string
+          status: string
+          student_id: string
+          title: string
+          total_pesewas: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          status?: string
+          student_id: string
+          title: string
+          total_pesewas?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          status?: string
+          student_id?: string
+          title?: string
+          total_pesewas?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount_pesewas: number
+          channel: string | null
+          created_at: string
+          id: string
+          invoice_id: string
+          method: string
+          paid_at: string | null
+          paid_by: string | null
+          recorded_by: string | null
+          reference: string | null
+          status: string
+          student_id: string
+        }
+        Insert: {
+          amount_pesewas: number
+          channel?: string | null
+          created_at?: string
+          id?: string
+          invoice_id: string
+          method?: string
+          paid_at?: string | null
+          paid_by?: string | null
+          recorded_by?: string | null
+          reference?: string | null
+          status?: string
+          student_id: string
+        }
+        Update: {
+          amount_pesewas?: number
+          channel?: string | null
+          created_at?: string
+          id?: string
+          invoice_id?: string
+          method?: string
+          paid_at?: string | null
+          paid_by?: string | null
+          recorded_by?: string | null
+          reference?: string | null
+          status?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      students: {
+        Row: {
+          class_id: string | null
+          created_at: string
+          first_name: string
+          id: string
+          last_name: string
+          status: string
+          student_code: string | null
+          updated_at: string
+        }
+        Insert: {
+          class_id?: string | null
+          created_at?: string
+          first_name: string
+          id?: string
+          last_name: string
+          status?: string
+          student_code?: string | null
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string | null
+          created_at?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          status?: string
+          student_code?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: never; Returns: boolean }
+      is_my_child: { Args: { _student_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "parent"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +567,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "parent"],
+    },
   },
 } as const
