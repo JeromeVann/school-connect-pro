@@ -14,6 +14,8 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedStudentsRouteImport } from './routes/_authenticated/students'
 import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack-webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +43,16 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStudentsRoute = AuthenticatedStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiPublicPaystackWebhookRoute =
   ApiPublicPaystackWebhookRouteImport.update({
     id: '/api/public/paystack-webhook',
@@ -53,6 +65,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/home': typeof AuthenticatedHomeRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/students': typeof AuthenticatedStudentsRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -60,6 +74,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/home': typeof AuthenticatedHomeRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/students': typeof AuthenticatedStudentsRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesById {
@@ -69,15 +85,29 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/students': typeof AuthenticatedStudentsRoute
   '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/home' | '/notifications' | '/api/public/paystack-webhook'
+    | '/'
+    | '/auth'
+    | '/home'
+    | '/notifications'
+    | '/settings'
+    | '/students'
+    | '/api/public/paystack-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/auth' | '/home' | '/notifications' | '/api/public/paystack-webhook'
+    | '/'
+    | '/auth'
+    | '/home'
+    | '/notifications'
+    | '/settings'
+    | '/students'
+    | '/api/public/paystack-webhook'
   id:
     | '__root__'
     | '/'
@@ -85,6 +115,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/home'
     | '/_authenticated/notifications'
+    | '/_authenticated/settings'
+    | '/_authenticated/students'
     | '/api/public/paystack-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -132,6 +164,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/students': {
+      id: '/_authenticated/students'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof AuthenticatedStudentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/paystack-webhook': {
       id: '/api/public/paystack-webhook'
       path: '/api/public/paystack-webhook'
@@ -145,11 +191,15 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedStudentsRoute: typeof AuthenticatedStudentsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHomeRoute: AuthenticatedHomeRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedStudentsRoute: AuthenticatedStudentsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
