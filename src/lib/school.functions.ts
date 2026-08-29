@@ -35,20 +35,33 @@ export const linkParentToStudent = createServerFn({ method: "POST" })
       data.fullName ?? null,
     );
 
-    const { error: roleError } = await supabaseAdmin
+    const { data: existingRole } = await supabaseAdmin
       .from("user_roles")
-      .upsert({ user_id: parentId, role: "parent" }, { onConflict: "user_id,role" });
-    if (roleError) throw new Error(roleError.message);
+      .select("id")
+      .eq("user_id", parentId)
+      .eq("role", "parent")
+      .maybeSingle();
+    if (!existingRole) {
+      const { error: roleError } = await supabaseAdmin
+        .from("user_roles")
+        .insert({ user_id: parentId, role: "parent" });
+      if (roleError) throw new Error(roleError.message);
+    }
 
-    const { error } = await supabaseAdmin.from("guardians").upsert(
-      {
+    const { data: existingLink } = await supabaseAdmin
+      .from("guardians")
+      .select("id")
+      .eq("parent_id", parentId)
+      .eq("student_id", data.studentId)
+      .maybeSingle();
+    if (!existingLink) {
+      const { error } = await supabaseAdmin.from("guardians").insert({
         parent_id: parentId,
         student_id: data.studentId,
         relationship: data.relationship ?? null,
-      },
-      { onConflict: "parent_id,student_id" },
-    );
-    if (error) throw new Error(error.message);
+      });
+      if (error) throw new Error(error.message);
+    }
 
     await insertNotifications(supabaseAdmin, [
       {
