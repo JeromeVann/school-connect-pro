@@ -12,9 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
-  validateSearch: (search: Record<string, unknown>) => ({
-    next: typeof search['next'] === "string" ? (search['next'] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { next?: string } =>
+    typeof search["next"] === "string" ? { next: search["next"] } : {},
   head: () => ({
     meta: [
       { title: "Sign in — SchoolPurse" },
@@ -56,7 +55,10 @@ function AuthPage() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     void navigate({ to: safeNext(next), replace: true });
   };
 
@@ -72,7 +74,10 @@ function AuthPage() {
       },
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Account created. You can sign in now.");
   };
 
@@ -80,7 +85,10 @@ function AuthPage() {
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: `${window.location.origin}/auth${next ? `?next=${encodeURIComponent(next)}` : ""}`,
     });
-    if (result.error) return toast.error("Google sign-in failed. Please try again.");
+    if (result.error) {
+      toast.error("Google sign-in failed. Please try again.");
+      return;
+    }
     if (result.redirected) return;
     void navigate({ to: safeNext(next), replace: true });
   };
