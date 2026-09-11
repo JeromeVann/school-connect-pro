@@ -1,24 +1,27 @@
 # School Connect Pro
 
-I want to develop an android app for school administrators to manage students, send fee invoices, and communicate with parents via push notifications. Parents get a companion app (or use the same app) to view balances, pay via MoMo, and receive announcements. how will you go about it?
+SchoolPurse — a PWA for school administrators to manage students, send fee invoices, and communicate with parents via in-app notifications. Parents view balances, pay via mobile money (Paystack), and receive announcements.
 
-This project was built with [Lovable](https://lovable.dev).
+## Stack
 
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/cb2f98c5-7c60-48d2-8b9c-a5ef6be6f443).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- TanStack Start (React 19) SSR app
+- Vite + Tailwind CSS v4 + shadcn/ui
+- Supabase (Postgres, Auth, RLS)
+- TanStack Query
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requires [Bun](https://bun.sh).
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+bun install
+bun run dev
+```
+
+Other commands:
+
+```sh
+bun run build      # production build
+bun run lint       # eslint .
+bun run format     # prettier --write .
 ```
